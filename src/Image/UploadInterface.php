@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Port;
+namespace App\Image;
 
 use App\Entity\Image;
 use Symfony\Component\HttpFoundation\File\UploadedFile;

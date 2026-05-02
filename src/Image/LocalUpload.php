@@ -3,7 +3,6 @@
 namespace App\Image;
 
 use App\Entity\Image;
-use App\Port\UploadInterface;
 use App\Repository\ImageRepository;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\File\Exception\UploadException;
