@@ -6,7 +6,6 @@ use ApiPlatform\Validator\Exception\ValidationException;
 use App\Entity\Image;
 use App\Repository\ImageRepository;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Validation;

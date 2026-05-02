@@ -4,12 +4,10 @@ namespace App\Book\Processor;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
-use ApiPlatform\Validator\Exception\ValidationException;
 use App\Entity\Book;
 use App\Image\LocalUpload;
 use App\Repository\BookRepository;
 use App\Repository\ImageRepository;
-use Symfony\Component\HttpFoundation\File\Exception\UploadException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
