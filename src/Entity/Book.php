@@ -8,6 +8,8 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\OpenApi\Model\Operation;
+use ApiPlatform\OpenApi\Model\RequestBody;
 use App\Book\Processor\ImageCreateProcessor;
 use App\Repository\BookRepository;
 use DateTimeImmutable;
@@ -36,6 +38,26 @@ use Symfony\Component\Serializer\Attribute\Groups;
                     identifiers: ['id']
                 ),
             ],
+            openapi: new Operation(
+                summary: 'Upload image to the book',
+                requestBody: new RequestBody(
+                    content: new \ArrayObject([
+                        'multipart/form-data' => [
+                            'schema' => [
+                                'type' => 'object',
+                                'required' => ['audio'],
+                                'properties' => [
+                                    'image' => [
+                                        'type' => 'string',
+                                        'format' => 'binary',
+                                        'description' => 'Image file (jpeg or png). Only ONE image allowed per request.',
+                                    ]
+                                ],
+                            ],
+                        ],
+                    ]),
+                )
+            ),
             normalizationContext: ['groups' => ['book:read']],
             deserialize: false,
             processor: ImageCreateProcessor::class
@@ -166,6 +188,6 @@ class Book
             return null;
         }
 
-        return sprintf('/images/%s',  $this->image->getPath());
+        return sprintf('/images/%s', $this->image->getPath());
     }
 }
