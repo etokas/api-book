@@ -162,6 +162,10 @@ class Book
     #[Groups(['book:read'])]
     public function getImagePath(): ?string
     {
+        if (null === $this->image) {
+            return null;
+        }
+
         return sprintf('/images/%s',  $this->image->getPath());
     }
 }

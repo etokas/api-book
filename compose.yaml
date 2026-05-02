@@ -30,6 +30,8 @@ services:
       - "8080:80"
     networks:
       - default
+    depends_on:
+      - php
 
 volumes:
   postgres_data:
