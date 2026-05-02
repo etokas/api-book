@@ -183,7 +183,7 @@ class Book
         return $this;
     }
 
-    #[Groups([Book::GROUP_READ])]
+    #[Groups([self::GROUP_READ])]
     public function getImagePath(): ?string
     {
         if (null === $this->image) {

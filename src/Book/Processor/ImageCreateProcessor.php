@@ -4,10 +4,8 @@ namespace App\Book\Processor;
 
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
+use App\Book\ImageService;
 use App\Entity\Book;
-use App\Image\UploadInterface;
-use App\Repository\BookRepository;
-use App\Repository\ImageRepository;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -17,12 +15,10 @@ class ImageCreateProcessor implements ProcessorInterface
 {
     public function __construct(
         private readonly RequestStack $requestStack,
-        private readonly UploadInterface $uploadService,
-        private readonly BookRepository $bookRepository,
-        private readonly ImageRepository $imageRepository,
+        private readonly ImageService $imageService,
     ) {
-
     }
+
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): Book
     {
         if (!$data instanceof Book) {
@@ -40,23 +36,6 @@ class ImageCreateProcessor implements ProcessorInterface
             throw new NotFoundHttpException('Image upload failed');
         }
 
-        $currentImage = $data->getImage();
-        if ($currentImage && sha1_file($image->getPathname()) === $currentImage->getHash()) {
-
-            return $data;
-        }
-
-        $imageEntity = $this->uploadService->upload($image);
-
-        if ($currentImage) {
-            $data->setImage(null);
-            $this->imageRepository->remove($currentImage);
-        }
-
-        $imageEntity->setBook($data);
-
-        $this->bookRepository->flush();
-
-        return $data;
+        return $this->imageService->createOrUpdate($image, $data);
     }
 }

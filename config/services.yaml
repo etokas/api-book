@@ -20,6 +20,6 @@ services:
             - '../src/Entity/'
             - '../src/Kernel.php'
 
-    App\Book\Processor\ImageCreateProcessor:
+    App\Book\ImageService:
         arguments:
             $uploadService: '@App\Image\LocalUpload'
