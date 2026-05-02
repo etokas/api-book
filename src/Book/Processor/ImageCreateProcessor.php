@@ -5,7 +5,7 @@ namespace App\Book\Processor;
 use ApiPlatform\Metadata\Operation;
 use ApiPlatform\State\ProcessorInterface;
 use App\Entity\Book;
-use App\Image\LocalUpload;
+use App\Image\UploadInterface;
 use App\Repository\BookRepository;
 use App\Repository\ImageRepository;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -17,7 +17,7 @@ class ImageCreateProcessor implements ProcessorInterface
 {
     public function __construct(
         private readonly RequestStack $requestStack,
-        private readonly LocalUpload $localUpload,
+        private readonly UploadInterface $uploadService,
         private readonly BookRepository $bookRepository,
         private readonly ImageRepository $imageRepository,
     ) {
@@ -46,7 +46,7 @@ class ImageCreateProcessor implements ProcessorInterface
             return $data;
         }
 
-        $imageEntity = $this->localUpload->upload($image);
+        $imageEntity = $this->uploadService->upload($image);
 
         if ($currentImage) {
             $data->setImage(null);
