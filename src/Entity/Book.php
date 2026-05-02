@@ -68,7 +68,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Table(name: 'app_book')]
 class Book
 {
-    const GROUP_READ = 'book:read';
+    public const GROUP_READ = 'book:read';
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
