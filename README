@@ -1,7 +1,0 @@
-make up
-
-make compose
-
-chmod +x bin/console
-
-chmod -R 777 var
