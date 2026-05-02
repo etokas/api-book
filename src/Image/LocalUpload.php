@@ -2,6 +2,7 @@
 
 namespace App\Image;
 
+use ApiPlatform\Validator\Exception\ValidationException;
 use App\Entity\Image;
 use App\Repository\ImageRepository;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
@@ -27,15 +28,8 @@ class LocalUpload implements UploadInterface
             mimeTypes: ['image/png', 'image/jpeg']
         ));
 
-        $messages = [];
-        foreach ($constraints as $constraint) {
-            $messages[] = $constraint->getMessage();
-        }
-
-
-        if (!empty($messages)) {
-            // send error one at a time
-            throw new UploadException($messages[0]);
+        if ($constraints->count() > 0) {
+            throw new ValidationException($constraints);
         }
 
         $originalName = $image->getClientOriginalName();

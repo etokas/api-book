@@ -20,14 +20,14 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ApiResource(
     operations: [
         new Get(
-            normalizationContext: ['groups' => ['book:read']]
+            normalizationContext: ['groups' => [Book::GROUP_READ]]
         ),
         new Post(
-            normalizationContext: ['groups' => ['book:read']]
+            normalizationContext: ['groups' => [Book::GROUP_READ]]
         ),
         new Delete(),
         new GetCollection(
-            normalizationContext: ['groups' => ['book:read']]
+            normalizationContext: ['groups' => [Book::GROUP_READ]]
         ),
         new Post(
             uriTemplate: '/books/{id}/image',
@@ -58,7 +58,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
                     ]),
                 )
             ),
-            normalizationContext: ['groups' => ['book:read']],
+            normalizationContext: ['groups' => [Book::GROUP_READ]],
             deserialize: false,
             processor: ImageCreateProcessor::class
         ),
@@ -68,30 +68,32 @@ use Symfony\Component\Serializer\Attribute\Groups;
 #[ORM\Table(name: 'app_book')]
 class Book
 {
+    const GROUP_READ = 'book:read';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(['book:read'])]
+    #[Groups([Book::GROUP_READ])]
     private ?int $id = null;
 
     #[ORM\Column(length: 150)]
-    #[Groups(['book:read'])]
+    #[Groups([Book::GROUP_READ])]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::SMALLINT)]
-    #[Groups(['book:read'])]
+    #[Groups([Book::GROUP_READ])]
     private ?int $price = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(['book:read'])]
+    #[Groups([Book::GROUP_READ])]
     private ?string $resume = null;
 
     #[ORM\Column]
-    #[Groups(['book:read'])]
+    #[Groups([Book::GROUP_READ])]
     private ?DateTimeImmutable $createdAt;
 
     #[ORM\Column(nullable: true)]
-    #[Groups(['book:read'])]
+    #[Groups([Book::GROUP_READ])]
     private ?DateTimeImmutable $updatedAt = null;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
@@ -181,7 +183,7 @@ class Book
         return $this;
     }
 
-    #[Groups(['book:read'])]
+    #[Groups([Book::GROUP_READ])]
     public function getImagePath(): ?string
     {
         if (null === $this->image) {
