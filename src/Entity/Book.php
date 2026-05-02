@@ -45,7 +45,7 @@ use Symfony\Component\Serializer\Attribute\Groups;
                         'multipart/form-data' => [
                             'schema' => [
                                 'type' => 'object',
-                                'required' => ['audio'],
+                                'required' => ['image'],
                                 'properties' => [
                                     'image' => [
                                         'type' => 'string',
